@@ -15,6 +15,6 @@ class Mountain extends Model
     ];
 
     public function climbingRegistration() {
-        return $this->hasMany(ClimbingRegistration::class, 'foreign_key');
+        return $this->hasMany(ClimbingRegistration::class);
     }
 }
