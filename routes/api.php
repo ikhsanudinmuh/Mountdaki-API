@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ClimbingRegistrationController;
 use App\Http\Controllers\API\MountainController;
 use App\Http\Controllers\API\UserController;
+use App\Models\ClimbingRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,3 +38,4 @@ Route::post('mountains', [MountainController::class, 'store'])->middleware(['aut
 #climbing registration routes
 Route::get('climbing_registrations', [ClimbingRegistrationController::class, 'index']);
 Route::post('climbing_registrations', [ClimbingRegistrationController::class, 'store'])->middleware(['auth:sanctum', 'ability:user']);
+Route::get('climbing_registrations/{id}', [ClimbingRegistrationController::class, 'show'])->middleware(['auth:sanctum', 'ability:user,admin']);
