@@ -6,6 +6,7 @@ use App\Http\Controllers\API\BaseController;
 use App\Models\ClimbingRegistration;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ClimbingRegistrationController extends BaseController
@@ -17,7 +18,11 @@ class ClimbingRegistrationController extends BaseController
      */
     public function index()
     {
-        $climbing = ClimbingRegistration::all();
+        $climbing = DB::table('climbing_registrations')
+                        ->leftJoin('users', 'climbing_registrations.user_id', '=', 'users.id')
+                        ->leftJoin('mountains', 'climbing_registrations.mountain_id', '=', 'mountains.id')
+                        ->select('climbing_registrations.*', 'users.name as user_name', 'mountains.name as mountain_name')
+                        ->get();
 
         return $this->sendResponse($climbing);
     }
@@ -56,7 +61,7 @@ class ClimbingRegistrationController extends BaseController
         $request->merge([
             'user_id' => $auth->id
         ]);
-        
+
         try {
             $climbing = ClimbingRegistration::create($request->all());
             return $this->sendResponse($climbing, 'Pendaftaran pendakian berhasil, Data akan dicek oleh admin');
@@ -71,9 +76,22 @@ class ClimbingRegistrationController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $climbing = DB::table('climbing_registrations')
+                        ->leftJoin('users', 'climbing_registrations.user_id', '=', 'users.id')
+                        ->leftJoin('mountains', 'climbing_registrations.mountain_id', '=', 'mountains.id')
+                        ->select('climbing_registrations.*', 'users.name as user_name', 'mountains.name as mountain_name')
+                        ->where('climbing_registrations.id', '=', $id)
+                        ->first();
+
+        $auth = $request->user();
+        if ($auth->id == $climbing->user_id || $auth->tokenCan('admin')) {
+            return $this->sendResponse($climbing);
+        } else {
+            return $this->sendError('Kamu tidak memiliki akses ke halaman ini');
+        }
+
     }
 
     /**
