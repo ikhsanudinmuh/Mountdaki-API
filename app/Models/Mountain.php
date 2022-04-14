@@ -13,4 +13,8 @@ class Mountain extends Model
     protected $fillable = [
         'name', 'image', 'description', 'location', 'height', 'rate', 'basecamp'
     ];
+
+    public function climbingRegistration() {
+        return $this->hasMany(ClimbingRegistration::class, 'foreign_key');
+    }
 }
