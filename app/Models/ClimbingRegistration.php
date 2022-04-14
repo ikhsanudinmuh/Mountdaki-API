@@ -16,4 +16,8 @@ class ClimbingRegistration extends Model
     public function mountain() {
         return $this->belongsTo(Mountain::class);
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
