@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ClimbingRegistrationController;
 use App\Http\Controllers\API\MountainController;
+use App\Http\Controllers\API\RatingController;
 use App\Http\Controllers\API\UserController;
 use App\Models\ClimbingRegistration;
 use Illuminate\Http\Request;
@@ -43,3 +44,6 @@ Route::put('climbing_registrations/approve/{id}', [ClimbingRegistrationControlle
 Route::put('climbing_registrations/decline/{id}', [ClimbingRegistrationController::class, 'approve'])->middleware(['auth:sanctum', 'ability:admin']);
 Route::put('climbing_registrations/climb/{id}', [ClimbingRegistrationController::class, 'climb'])->middleware(['auth:sanctum', 'ability:user']);
 Route::put('climbing_registrations/done/{id}', [ClimbingRegistrationController::class, 'done'])->middleware(['auth:sanctum', 'ability:user']);
+
+//rating routes
+Route::post('ratings', [RatingController::class, 'store'])->middleware(['auth:sanctum', 'ability:user']);
