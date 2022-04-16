@@ -89,7 +89,7 @@ class ClimbingRegistrationController extends BaseController
         if ($auth->id == $climbing->user_id || $auth->tokenCan('admin')) {
             return $this->sendResponse($climbing);
         } else {
-            return $this->sendError('Kamu tidak memiliki akses ke halaman ini');
+            return $this->sendError('Anda tidak memiliki akses ke halaman ini', [], 401);
         }
 
     }
@@ -115,6 +115,80 @@ class ClimbingRegistrationController extends BaseController
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function approve($id) {
+        $climbing = DB::table('climbing_registrations')->where('id', $id);
+
+        if ($climbing->first() == null) {
+            return $this->sendError('Data pendaftaran tidak ditemukan');
+        }
+
+        try {
+            $climbing->update(['status' => 'approved']);
+            return $this->sendResponse([], 'Status pendaftaran diubah menjadi (disetujui)');
+        } catch (QueryException $e) {
+            return $this->sendError('Status pendaftaran gagal diubah', $e->errorInfo, 400);
+        }  
+    }
+
+    public function decline($id) {
+        $climbing = DB::table('climbing_registrations')->where('id', $id);
+
+        if ($climbing->first() == null) {
+            return $this->sendError('Data pendaftaran tidak ditemukan');
+        }
+
+        try {
+            $climbing->update(['status' => 'declined']);
+            return $this->sendResponse([], 'Status pendaftaran diubah menjadi (ditolak)');
+        } catch (QueryException $e) {
+            return $this->sendError('Status pendaftaran gagal diubah', $e->errorInfo, 400);
+        }  
+    }
+
+    public function climb(Request $request, $id) {
+        $auth = $request->user();
+
+        $climbing = DB::table('climbing_registrations')->where('id', $id);
+        
+        if ($climbing->first() == null) {
+            return $this->sendError('Data pendaftaran tidak ditemukan');
+        }
+
+        if ($auth->id == $climbing->first()->user_id) {
+            try {
+                $climbing->update(['status' => 'climbing']);
+                return $this->sendResponse([], 'Status pendaftaran diubah menjadi (mendaki)');
+            } catch (QueryException $e) {
+                return $this->sendError('Status pendaftaran gagal diubah', $e->errorInfo, 400);
+            }  
+        } else {
+            return $this->sendError('Data pendaftaran ini bukan milik anda', [], 401);
+        }
+
+    }
+
+    public function done(Request $request, $id) {
+        $auth = $request->user();
+
+        $climbing = DB::table('climbing_registrations')->where('id', $id);
+        
+        if ($climbing->first() == null) {
+            return $this->sendError('Data pendaftaran tidak ditemukan');
+        }
+
+        if ($auth->id == $climbing->first()->user_id) {
+            try {
+                $climbing->update(['status' => 'done']);
+                return $this->sendResponse([], 'Status pendaftaran diubah menjadi (selesai)');
+            } catch (QueryException $e) {
+                return $this->sendError('Status pendaftaran gagal diubah', $e->errorInfo, 400);
+            }  
+        } else {
+            return $this->sendError('Data pendaftaran ini bukan milik anda', [], 401);
+        }
+
     }
 
     /**
