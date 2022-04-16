@@ -45,7 +45,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function climbingRegistration() {
+    public function climbing_registration() {
         return $this->hasMany(ClimbingRegistration::class);
+    }
+
+    public function rating() {
+        return $this->hasMany(Rating::class);
     }
 }
