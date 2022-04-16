@@ -39,3 +39,7 @@ Route::post('mountains', [MountainController::class, 'store'])->middleware(['aut
 Route::get('climbing_registrations', [ClimbingRegistrationController::class, 'index']);
 Route::post('climbing_registrations', [ClimbingRegistrationController::class, 'store'])->middleware(['auth:sanctum', 'ability:user']);
 Route::get('climbing_registrations/{id}', [ClimbingRegistrationController::class, 'show'])->middleware(['auth:sanctum', 'ability:user,admin']);
+Route::put('climbing_registrations/approve/{id}', [ClimbingRegistrationController::class, 'approve'])->middleware(['auth:sanctum', 'ability:admin']);
+Route::put('climbing_registrations/decline/{id}', [ClimbingRegistrationController::class, 'approve'])->middleware(['auth:sanctum', 'ability:admin']);
+Route::put('climbing_registrations/climb/{id}', [ClimbingRegistrationController::class, 'climb'])->middleware(['auth:sanctum', 'ability:user']);
+Route::put('climbing_registrations/done/{id}', [ClimbingRegistrationController::class, 'done'])->middleware(['auth:sanctum', 'ability:user']);
