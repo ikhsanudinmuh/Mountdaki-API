@@ -3,10 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\ClimbingRegistration;
 use App\Models\Mountain;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -66,6 +68,22 @@ class DatabaseSeeder extends Seeder
             'location' => 'Jawa Timur',
             'rate' => 0,
             'basecamp' => 4,
+        ]);
+
+        ClimbingRegistration::create([
+            'mountain_id' => 1,
+            'user_id' => 1,
+            'identity_card' => 'no-image.png',
+            'healthy_letter' => 'no-image.png',
+            'schedule' => Carbon::create(2022, 4, 17)
+        ]);
+
+        ClimbingRegistration::create([
+            'mountain_id' => 2,
+            'user_id' => 2,
+            'identity_card' => 'no-image.png',
+            'healthy_letter' => 'no-image.png',
+            'schedule' => Carbon::create(2022, 4, 18)
         ]);
     }
 }
