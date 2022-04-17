@@ -94,6 +94,23 @@ class ClimbingRegistrationController extends BaseController
 
     }
 
+    public function showByUserId(Request $request, $id) {
+        $climbing = DB::table('climbing_registrations')
+                        ->leftJoin('users', 'climbing_registrations.user_id', '=', 'users.id')
+                        ->leftJoin('mountains', 'climbing_registrations.mountain_id', '=', 'mountains.id')
+                        ->select('climbing_registrations.*', 'mountains.name as mountain_name', 'users.name as user_name')
+                        ->where('climbing_registrations.user_id', '=', $id)
+                        ->get();
+
+        $auth = $request->user();
+        // if ($auth->id == $climbing->user_id) {
+        //     return $this->sendResponse($climbing);
+        // } else {
+        //     return $this->sendError('Anda tidak memiliki akses ke halaman ini', [], 401);
+        // }
+        return $this->sendResponse($climbing);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

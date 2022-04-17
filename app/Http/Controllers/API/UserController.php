@@ -78,7 +78,9 @@ class UserController extends BaseController
      */
     public function show($id)
     {
-        
+        $user = User::where('id', $id);
+
+        return $this->sendResponse($user);
     }
 
     /**

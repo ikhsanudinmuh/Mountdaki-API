@@ -20,7 +20,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('location');
             $table->integer('height');
-            $table->float('rate')->nullable();
             $table->integer('basecamp');
             $table->timestamps();
         });

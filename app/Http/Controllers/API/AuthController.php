@@ -34,6 +34,8 @@ class AuthController extends BaseController
 
         $token = $user->createToken($request->email, ['user'])->plainTextToken;
         return $this->sendResponse([
+            'name' => $user->name,
+            'id' => $user->id,
             'access_token' => $token
         ], 'Login Berhasil');
     }
@@ -60,6 +62,7 @@ class AuthController extends BaseController
 
         $token = $admin->createToken($request->email, ['admin'])->plainTextToken;
         return $this->sendResponse([
+            'name' => $admin->name,
             'access_token' => $token
         ], 'Login Berhasil');
     }

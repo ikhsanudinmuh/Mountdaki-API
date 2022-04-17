@@ -80,6 +80,19 @@ class MountainController extends BaseController
         }
     }
 
+    public function showByRate() {
+        $mountain = DB::table('mountains')
+                        ->orderBy('rate', 'desc')
+                        ->take(3)
+                        ->get();
+
+        if ($mountain) {
+            return $this->sendResponse($mountain);
+        } else {
+            return $this->sendError('Gunung tidak ditemukan');
+        }
+    }
+
     public function search($name)
     {
         $mountain = Mountain::where('name', 'LIKE', '%'.$name.'%')->get();
@@ -111,34 +124,33 @@ class MountainController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $auth = $request->user();
+        $mountain = DB::table('mountains')->where('id', $id);
 
-        if ($auth->tokenCan('admin')) {
-            $mountain = DB::table('mountains')->where('id', $id);
+        if($mountain == null) {
+            return $this->sendError('Gunung tidak ditemukan');
+        }
 
-            if($mountain == null) {
-                return $this->sendError('Gunung tidak ditemukan');
-            }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            // 'image' => 'required',
+            'location' => 'required',
+            'height' => 'required|numeric',
+            'basecamp' => 'required|numeric' 
+        ]);
 
-            $validator = Validator::make($request->all(), [
-                'name' => 'required',
-                'image' => 'required',
-                'location' => 'required',
-                'height' => 'required|numeric',
-                'basecamp' => 'required|numeric' 
-            ]);
-    
-            if ($validator->fails()) {
-                return $this->sendError($validator->errors(), [], 422);
-            }
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors(), [], 422);
+        }
 
-            try {
-                $mountain->update($request->all());
+        $data = $request->all();
+        $data = request()->except(['_token', '_method']);
 
-                return $this->sendResponse('', 'Data gunung berhasil diubah');
-            } catch (QueryException $e) {
-                return $this->sendError('Data gunung gagal diubah', $e->errorInfo, 400);
-            }
+        try {
+            $mountain->update($data);
+
+            return $this->sendResponse('', 'Data gunung berhasil diubah');
+        } catch (QueryException $e) {
+            return $this->sendError('Data gunung gagal diubah', $e->errorInfo, 400);
         }
     }
 
@@ -150,6 +162,15 @@ class MountainController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        $mountain = DB::table('mountains')->where('id', $id);
+
+        try {
+            $mountain->delete();
+            return $this->sendResponse('', 'Data gunung berhasil dihapus');
+        } catch (QueryException $e) {
+            return $this->sendError('Data gunung gagal dihapus', $e->errorInfo, 400);
+        }
+
+        
     }
 }

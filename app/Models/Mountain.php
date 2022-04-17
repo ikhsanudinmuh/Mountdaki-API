@@ -11,7 +11,7 @@ class Mountain extends Model
     use HasFactory, HasApiTokens;
 
     protected $fillable = [
-        'name', 'image', 'description', 'location', 'height', 'rate', 'basecamp'
+        'name', 'image', 'description', 'location', 'height', 'basecamp'
     ];
 
     public function climbing_registration() {

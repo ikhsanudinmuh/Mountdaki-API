@@ -48,8 +48,4 @@ class User extends Authenticatable
     public function climbing_registration() {
         return $this->hasMany(ClimbingRegistration::class);
     }
-
-    public function rating() {
-        return $this->hasMany(Rating::class);
-    }
 }
