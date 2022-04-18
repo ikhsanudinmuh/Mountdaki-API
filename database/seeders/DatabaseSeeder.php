@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
 
         Mountain::create([
             'name' => 'Gunung Lawu',
-            'image' => 'Gunung Lawu.png',
+            'image' => 'Gunung Lawu.jpg',
             'description' => 'Gunung Lawu terletak di Pulau Jawa, Indonesia, tepatnya di perbatasan Provinsi Jawa Tengah dan Jawa Timur. Gunung Lawu terletak di antara tiga kabupaten yaitu Kabupaten Karanganyar, Jawa Tengah, Kabupaten Ngawi, dan Kabupaten Magetan, Jawa Timur.',
             'location' => 'Jawa Tengah',
             'height' => 3265,
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
 
         Mountain::create([
             'name' => 'Gunung Semeru',
-            'image' => 'Gunung Semeru.png',
+            'image' => 'Gunung Semeru.jpg',
             'description' => 'Gunung Semeru atau Gunung Meru adalah sebuah gunung berapi kerucut di Jawa Timur, Indonesia. ',
             'height' => 3676,
             'location' => 'Jawa Timur',
