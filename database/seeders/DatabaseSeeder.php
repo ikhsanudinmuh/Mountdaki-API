@@ -33,12 +33,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Agil Fachrian',
-            'email' => 'agil@gmail.com',
-            'password' => bcrypt('agil123'),
-        ]);
-
-        User::create([
             'name' => 'Bagas Wara',
             'email' => 'bagas@gmail.com',
             'password' => bcrypt('bagas123'),
@@ -52,38 +46,20 @@ class DatabaseSeeder extends Seeder
 
         Mountain::create([
             'name' => 'Gunung Lawu',
-            'image' => 'lawu.png',
+            'image' => 'Gunung Lawu.png',
             'description' => 'Gunung Lawu terletak di Pulau Jawa, Indonesia, tepatnya di perbatasan Provinsi Jawa Tengah dan Jawa Timur. Gunung Lawu terletak di antara tiga kabupaten yaitu Kabupaten Karanganyar, Jawa Tengah, Kabupaten Ngawi, dan Kabupaten Magetan, Jawa Timur.',
             'location' => 'Jawa Tengah',
             'height' => 3265,
-            'rate' => 0,
             'basecamp' => 5,
         ]);
 
         Mountain::create([
             'name' => 'Gunung Semeru',
-            'image' => 'semeru.png',
-            'description' => 'Semeru, or Mount Semeru, is an active volcano in East Java, Indonesia. It is located in a subduction zone, where the Indo-Australian plate subducts under the Eurasia plate. It is the highest mountain on the island of Java',
+            'image' => 'Gunung Semeru.png',
+            'description' => 'Gunung Semeru atau Gunung Meru adalah sebuah gunung berapi kerucut di Jawa Timur, Indonesia. ',
             'height' => 3676,
             'location' => 'Jawa Timur',
-            'rate' => 0,
             'basecamp' => 4,
-        ]);
-
-        ClimbingRegistration::create([
-            'mountain_id' => 1,
-            'user_id' => 1,
-            'identity_card' => 'no-image.png',
-            'healthy_letter' => 'no-image.png',
-            'schedule' => Carbon::create(2022, 4, 17)
-        ]);
-
-        ClimbingRegistration::create([
-            'mountain_id' => 2,
-            'user_id' => 2,
-            'identity_card' => 'no-image.png',
-            'healthy_letter' => 'no-image.png',
-            'schedule' => Carbon::create(2022, 4, 18)
         ]);
     }
 }
