@@ -48,21 +48,21 @@ class ClimbingRegistrationController extends BaseController
         $auth = $request->user();
 
         $validator = Validator::make($request->all(), [
-            'mountain_id' => 'required|numeric',
-            'identity_card' => 'required',
-            'healthy_letter' => 'required',
-            'schedule' => 'required|date_format:Y/m/d'
+            'mountain_id' => 'required',
+            'schedule' => 'required'
         ]);
 
         if ($validator->fails()) {
             return $this->sendError($validator->errors(), [], 422);
         }
-        
+        // $identity_card = $request->file('identity_card');
+        // $identity_card_name = $identity_card->getClientOriginalName();
         $request->merge([
-            'user_id' => $auth->id
+            'user_id' => $auth->id,
         ]);
-
+        
         try {
+            // $identity_card->move(public_path('/assets/images'), $identity_card_name); 
             $climbing = ClimbingRegistration::create($request->all());
             return $this->sendResponse($climbing, 'Pendaftaran pendakian berhasil, Data akan dicek oleh admin');
         } catch (QueryException $e) {

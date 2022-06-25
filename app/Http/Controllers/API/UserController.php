@@ -48,9 +48,8 @@ class UserController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|string|unique:users',
             'password' => 'required|min:8',
-            'confirm_password' => 'required|same:password',
         ]);
 
         if($validator->fails()) {
@@ -78,7 +77,7 @@ class UserController extends BaseController
      */
     public function show($id)
     {
-        $user = User::where('id', $id);
+        $user = User::where('id', $id)->first();
 
         return $this->sendResponse($user);
     }

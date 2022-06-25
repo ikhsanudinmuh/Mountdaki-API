@@ -10,7 +10,7 @@ class ClimbingRegistration extends Model
     use HasFactory;
 
     protected $fillable = [
-        'mountain_id', 'user_id', 'identity_card', 'healthy_letter', 'schedule', 'status'
+        'mountain_id', 'user_id', 'schedule', 'status'
     ];
 
     public function mountain() {
