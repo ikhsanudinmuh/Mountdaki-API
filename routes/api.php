@@ -46,3 +46,6 @@ Route::put('/climbing_registrations/approve/{id}', [ClimbingRegistrationControll
 Route::put('/climbing_registrations/decline/{id}', [ClimbingRegistrationController::class, 'decline'])->middleware(['auth:sanctum', 'ability:admin']);
 Route::put('/climbing_registrations/climb/{id}', [ClimbingRegistrationController::class, 'climb'])->middleware(['auth:sanctum', 'ability:user']);
 Route::put('/climbing_registrations/done/{id}', [ClimbingRegistrationController::class, 'done'])->middleware(['auth:sanctum', 'ability:user']);
+
+
+#last fix
